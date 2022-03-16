@@ -1,11 +1,14 @@
 [tool.poetry]
-name = "exports"
+name = "python-exports"
 version = "1.0.0"
 description = "@export decorator that adds a function or class to __all__"
 authors = ["Joren Hammudoglu <jhammudoglu@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/jorenham/exports"
+packages = [
+    { include = "exports" }
+]
 
 
 [tool.poetry.dependencies]

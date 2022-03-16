@@ -6,7 +6,7 @@
 
 *Requires python>=3.8*
 
-`pip install exports`
+`pip install python-exports`
 
 
 ## Usage
