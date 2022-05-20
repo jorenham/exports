@@ -1,10 +1,16 @@
 # Explicit module exports
 
+`@export` - The DRY alternative to `__all__`
 
+-----
+
+[![PyPI version shields.io](https://img.shields.io/pypi/v/python-exports.svg)](https://pypi.python.org/pypi/python-exports/)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/python-exports.svg)](https://pypi.python.org/pypi/python-exports/)
+[![PyPI license](https://img.shields.io/pypi/l/python-exports.svg)](https://pypi.python.org/pypi/python-exports/)
+
+-----
 
 ## Installation
-
-*Requires python>=3.8*
 
 `pip install python-exports`
 
