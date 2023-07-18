@@ -1,3 +1,8 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
 [tool.poetry]
 name = "python-exports"
 version = "1.0.0"
@@ -10,23 +15,19 @@ packages = [
     { include = "exports" }
 ]
 
-
 [tool.poetry.dependencies]
 python = "^3.8"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1"
-mypy = "^0.941"
+pyright = "^1.1"
 
 
-[tool.mypy]
-python_version = "3.8"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-exclude = "tests"
+[tool.pyright]
+include = ["exports"]
+exclude = [".git", "dist",  "build", "**/__pycache__", "**/.pytest_cache"]
+venv = ".venv"
+pythonVersion = "3.8"
+pythonPlatform = "All"
+typeCheckingMode = "strict"
 
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"

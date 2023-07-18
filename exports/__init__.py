@@ -3,19 +3,25 @@ import inspect
 import threading
 import warnings
 from typing import (
+    Any,
     Callable,
-    ContextManager,
     Final,
+    Sequence,
+    cast,
     overload,
-    Type,
     TypeVar,
     Union,
 )
 
 
-_T = TypeVar('_T', bound=Union[Callable, Type])
+_T = TypeVar('_T', bound=Union[Callable[..., Any], type, object])
+_V  = TypeVar('_V')
 
 _lock: Final[threading.Lock] = threading.Lock()
+
+
+def _identity(_obj: _V) -> _V:
+    return _obj
 
 
 @overload
@@ -28,7 +34,7 @@ def export(
     obj: Union[_T, str],
     *,
     threadsafe: bool = False
-) -> Union[_T, Callable[[_T], _T]]:
+) -> Union[Callable[[_T], _T], _T]:
     """Add a function, class or name to __all__.
 
     If the module has no __all__, it is created. Otherwise, the export is
@@ -80,22 +86,16 @@ def export(
 
     if isinstance(obj, str):
         name = obj
-        res = lambda _obj: _obj
+        res = _identity
     else:
         res = obj
-        name = obj.__name__
+        name = cast(str, getattr(obj, '__name__', None) or str(obj))
 
-    lock: ContextManager
-    if threadsafe:
-        lock = _lock
-    else:
-        lock = contextlib.nullcontext()
-
-    with lock:
+    with _lock if threadsafe else contextlib.nullcontext():
         if hasattr(module, '__all__'):
             if not isinstance(module.__all__, list):
                 setattr(module, '__all__', list(module.__all__))
-            exports = module.__all__[:]
+            exports = list(cast(Sequence[str], module.__all__[:]))
         else:
             setattr(module, '__all__', [])
             exports = []
@@ -110,22 +110,5 @@ def export(
     return res
 
 
-# you can't decorate yourself; it's a chicken/egg situation
+# effectively self-decoration
 export(export)
-
-
-@overload
-def export_threadsafe(obj: str) -> Callable[[_T], _T]: ...
-@overload
-def export_threadsafe(obj: _T) -> _T: ...
-
-
-@export
-def export_threadsafe(obj: Union[_T, str]) -> Union[_T, Callable[[_T], _T]]:
-    """Thread-safe version of export().
-
-    Uses threading.Lock when modifying __all__.
-
-    This negatively impacts performance: Don't use if not needed!
-    """
-    return export(obj, threadsafe=True)
