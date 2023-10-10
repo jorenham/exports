@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: install poetry
+        run: pipx install poetry
+
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: poetry
+
+      - name: check
+        run: poetry check
+
+      - name: install
+        run: poetry install --sync
+
+      - name: codespell
+        run: poetry run codespell .
+
+      - name: pyright
+        run: poetry run pyright
+
+      - name: pytest
+        run: poetry run py.test
