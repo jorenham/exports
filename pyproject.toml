@@ -23,6 +23,7 @@ classifiers = [
 ]
 repository = "https://github.com/jorenham/exports"
 documentation = "https://github.com/jorenham/exports/blob/master/README.md"
+packages = [{include = "exports"}]  # don't remove
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/jorenham/exports/issues"
