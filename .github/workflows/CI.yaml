@@ -46,8 +46,14 @@ jobs:
       - name: codespell
         run: poetry run codespell .
 
-      - name: pyright
-        run: poetry run pyright
+      - name: codespell
+        run: poetry run ruff check --output-format=github
+
+      - name: basedpyright
+        run: poetry run basedpyright
+
+      - name: basedpyright --verifytypes
+        run: poetry run basedpyright --ignoreexternal --verifytypes exports
 
       - name: pytest
         run: poetry run pytest
