@@ -56,18 +56,11 @@ Ready to contribute? Here's how to set up `exports` for local development.
     poetry install
     ```
 
-4. When you're done making changes, check that your changes pass ruff, basedpyright and
-the tests:
+4. Install pre-commit:
 
     ```bash
-    poetry run ruff check
-    poetry run basedpyright
-    poetry run pytest
+    poetry run pre-commit install
     ```
-
-5. Commit your changes and push to GitHub
-
-6. Submit a pull request through the GitHub website.
 
 ## Pull Request Guidelines
 
@@ -78,4 +71,3 @@ that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in `README.md`.
-3. The pull request should work for Python 3.8 - 3.13

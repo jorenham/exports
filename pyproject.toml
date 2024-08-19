@@ -30,11 +30,16 @@ packages = [{include = "exports"}]  # don't remove
 "Changelog" = "https://github.com/jorenham/exports/releases"
 
 [tool.poetry.dependencies]
+# py38 EOL: 2024-10
 python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
 basedpyright = "^1.16.0"
 codespell = "^2.3.0"
+pre-commit = [
+    {version = "^3.8.0", python = ">=3.9"},
+    {version = "^3.5.0", python = "<3.9"},
+]
 pytest = "^8.3.2"
 ruff = "^0.6.1"
 
