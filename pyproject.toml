@@ -32,8 +32,8 @@ documentation = "https://github.com/jorenham/exports/blob/master/README.md"
 python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
+basedpyright = "^1.16.0"
 codespell = "^2.3.0"
-pyright = "^1.1.376"
 pytest = "^8.3.2"
 ruff = "^0.6.1"
 
@@ -51,7 +51,9 @@ venvPath = "."
 venv = ".venv"
 pythonVersion = "3.8"
 pythonPlatform = "All"
-typeCheckingMode = "strict"
+typeCheckingMode = "all"
+
+reportUnusedCallResult = false  # https://github.com/microsoft/pyright/issues/8650
 
 
 [tool.pytest.ini_options]

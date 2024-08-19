@@ -47,7 +47,7 @@ jobs:
         run: poetry run codespell .
 
       - name: pyright
-        run: poetry run pyright
+        run: poetry run basedpyright
 
       - name: pytest
         run: poetry run pytest
