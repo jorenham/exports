@@ -73,6 +73,7 @@ def export(obj: _T | str, /, *, threadsafe: bool = False) -> Callable[[_T], _T] 
     if module is None:
         raise ModuleNotFoundError(f'could not find module of {obj!r}')
 
+    res: Callable[[_T], _T] | _T
     if isinstance(obj, str):
         name = obj
         res = _identity
@@ -86,7 +87,7 @@ def export(obj: _T | str, /, *, threadsafe: bool = False) -> Callable[[_T], _T] 
             warnings.warn(f'{name!r} already exported', stacklevel=2)
         else:
             exports.append(name)
-        module.__all__ = exports  # pyright: ignore[reportAttributeAccessIssue]
+        module.__all__ = exports  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]
 
     return res
 

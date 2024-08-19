@@ -55,8 +55,8 @@ jobs:
       - name: basedpyright --verifytypes
         run: poetry run basedpyright --ignoreexternal --verifytypes exports
 
-      # - name: mypy
-      #   run: poetry run mypy .
+      - name: basedmypy
+        run: poetry run mypy .
 
   test:
     runs-on: ubuntu-latest

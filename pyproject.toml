@@ -34,6 +34,7 @@ packages = [{include = "exports"}]  # don't remove
 python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
+basedmypy = "^2.6.0"
 basedpyright = "^1.16.0"
 codespell = "^2.3.0"
 pre-commit = [
@@ -56,6 +57,24 @@ pytest-github-actions-annotate-failures = ">=0.2.0,<1.0"
 skip = '*.lock,.venv,.vscode,dist'
 context = 2
 
+
+[tool.mypy]
+python_version = "3.10"
+always_true = "NP2"
+always_false = "NP20"
+modules = ["optype", "tests"]
+exclude = ["^.venv/.*", "tests/*"]
+strict = true
+
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+show_error_code_links = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+# based
+disallow_any_expr = false  # https://github.com/numpy/numpy/pull/27211
+disallow_any_explicit = false
+disallow_any_decorated = false
 
 [tool.pyright]
 include = ["exports"]

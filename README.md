@@ -37,12 +37,12 @@
             src="https://img.shields.io/badge/pre--commit-enabled-orange?logo=pre-commit"
         />
     </a>
-    <!-- <a href="https://github.com/KotlinIsland/basedmypy">
+    <a href="https://github.com/KotlinIsland/basedmypy">
         <img
             alt="exports - basedmypy"
             src="https://img.shields.io/badge/basedmypy-checked-fd9002"
         />
-    </a> -->
+    </a>
     <a href="https://detachhead.github.io/basedpyright">
         <img
             alt="exports - basedpyright"
