@@ -11,17 +11,14 @@ authors = ["Joren Hammudoglu <jhammudoglu@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/jorenham/exports"
-packages = [
-    { include = "exports" }
-]
 
 [tool.poetry.dependencies]
 python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.4"
-pyright = "^1.1"
-codespell = "^2.2.6"
+pytest = "^8.3.2"
+pyright = "^1.1.376"
+codespell = "^2.3.0"
 
 [tool.pyright]
 include = ["exports"]
