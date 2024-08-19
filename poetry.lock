@@ -48,6 +48,20 @@ files = [
 ]
 
 [[package]]
+name = "click"
+version = "8.1.7"
+description = "Composable command line interface toolkit"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "click-8.1.7-py3-none-any.whl", hash = "sha256:ae74fb96c20a0277a1d615f1e4d73c8414f5a98db8b799a7931d1582f3390c28"},
+    {file = "click-8.1.7.tar.gz", hash = "sha256:ca9853ad459e787e2192211578cc907e7594e294c7ccc834310722b41b9ca6de"},
+]
+
+[package.dependencies]
+colorama = {version = "*", markers = "platform_system == \"Windows\""}
+
+[[package]]
 name = "codespell"
 version = "2.3.0"
 description = "Codespell"
@@ -139,6 +153,41 @@ python-versions = ">=3.7"
 files = [
     {file = "iniconfig-2.0.0-py3-none-any.whl", hash = "sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374"},
     {file = "iniconfig-2.0.0.tar.gz", hash = "sha256:2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3"},
+]
+
+[[package]]
+name = "markdown-it-py"
+version = "3.0.0"
+description = "Python port of markdown-it. Markdown parsing, done right!"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "markdown-it-py-3.0.0.tar.gz", hash = "sha256:e3f60a94fa066dc52ec76661e37c851cb232d92f9886b15cb560aaada2df8feb"},
+    {file = "markdown_it_py-3.0.0-py3-none-any.whl", hash = "sha256:355216845c60bd96232cd8d8c40e8f9765cc86f46880e43a8fd22dc1a1a8cab1"},
+]
+
+[package.dependencies]
+mdurl = ">=0.1,<1.0"
+
+[package.extras]
+benchmarking = ["psutil", "pytest", "pytest-benchmark"]
+code-style = ["pre-commit (>=3.0,<4.0)"]
+compare = ["commonmark (>=0.9,<1.0)", "markdown (>=3.4,<4.0)", "mistletoe (>=1.0,<2.0)", "mistune (>=2.0,<3.0)", "panflute (>=2.3,<3.0)"]
+linkify = ["linkify-it-py (>=1,<3)"]
+plugins = ["mdit-py-plugins"]
+profiling = ["gprof2dot"]
+rtd = ["jupyter_sphinx", "mdit-py-plugins", "myst-parser", "pyyaml", "sphinx", "sphinx-copybutton", "sphinx-design", "sphinx_book_theme"]
+testing = ["coverage", "pytest", "pytest-cov", "pytest-regressions"]
+
+[[package]]
+name = "mdurl"
+version = "0.1.2"
+description = "Markdown URL utilities"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8"},
+    {file = "mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba"},
 ]
 
 [[package]]
@@ -245,6 +294,20 @@ identify = ">=1.0.0"
 nodeenv = ">=0.11.1"
 pyyaml = ">=5.1"
 virtualenv = ">=20.10.0"
+
+[[package]]
+name = "pygments"
+version = "2.18.0"
+description = "Pygments is a syntax highlighting package written in Python."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "pygments-2.18.0-py3-none-any.whl", hash = "sha256:b8e6aca0523f3ab76fee51799c488e38782ac06eafcf95e7ba832985c8e7b13a"},
+    {file = "pygments-2.18.0.tar.gz", hash = "sha256:786ff802f32e91311bff3889f6e9a86e81505fe99f2735bb6d60ae0c5004f199"},
+]
+
+[package.extras]
+windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
 name = "pyproject-api"
@@ -364,6 +427,70 @@ files = [
 ]
 
 [[package]]
+name = "repo-review"
+version = "0.11.0"
+description = "Framework that can run checks on repos"
+optional = false
+python-versions = ">=3.10"
+files = [
+    {file = "repo_review-0.11.0-py3-none-any.whl", hash = "sha256:69f4764af21f69388ee9a3acf52cae9eb82c73d5a874e9613c4194118ab258ec"},
+    {file = "repo_review-0.11.0.tar.gz", hash = "sha256:d2942685da1aa9ee946a3ba47532eeb5b9f5bdfba7193944c5844b9fc6a4ffe7"},
+]
+
+[package.dependencies]
+click = {version = ">=8", optional = true, markers = "extra == \"cli\""}
+markdown-it-py = "*"
+pyyaml = "*"
+rich = {version = ">=12.2", optional = true, markers = "extra == \"cli\""}
+rich-click = {version = "*", optional = true, markers = "extra == \"cli\""}
+tomli = {version = "*", markers = "python_version < \"3.11\""}
+typing-extensions = {version = "*", markers = "python_version < \"3.11\""}
+
+[package.extras]
+cli = ["click (>=8)", "rich (>=12.2)", "rich-click"]
+dev = ["click (>=8)", "pytest (>=7)", "rich (>=12.2)", "rich-click", "sp-repo-review (>=2023.12.21)", "validate-pyproject (>=0.14)"]
+docs = ["click (>=8)", "furo", "myst-parser (>=0.13)", "rich (>=12.2)", "rich-click", "sphinx (>=4.0)", "sphinx-autodoc-typehints", "sphinx-copybutton", "sphinx-github-changelog", "sphinxcontrib-programoutput", "sphinxext-opengraph"]
+test = ["pytest (>=7)", "sp-repo-review (>=2023.12.21)", "validate-pyproject (>=0.14)"]
+
+[[package]]
+name = "rich"
+version = "13.7.1"
+description = "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal"
+optional = false
+python-versions = ">=3.7.0"
+files = [
+    {file = "rich-13.7.1-py3-none-any.whl", hash = "sha256:4edbae314f59eb482f54e9e30bf00d33350aaa94f4bfcd4e9e3110e64d0d7222"},
+    {file = "rich-13.7.1.tar.gz", hash = "sha256:9be308cb1fe2f1f57d67ce99e95af38a1e2bc71ad9813b0e247cf7ffbcc3a432"},
+]
+
+[package.dependencies]
+markdown-it-py = ">=2.2.0"
+pygments = ">=2.13.0,<3.0.0"
+
+[package.extras]
+jupyter = ["ipywidgets (>=7.5.1,<9)"]
+
+[[package]]
+name = "rich-click"
+version = "1.8.3"
+description = "Format click help output nicely with rich"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "rich_click-1.8.3-py3-none-any.whl", hash = "sha256:636d9c040d31c5eee242201b5bf4f2d358bfae4db14bb22ec1cafa717cfd02cd"},
+    {file = "rich_click-1.8.3.tar.gz", hash = "sha256:6d75bdfa7aa9ed2c467789a0688bc6da23fbe3a143e19aa6ad3f8bac113d2ab3"},
+]
+
+[package.dependencies]
+click = ">=7"
+rich = ">=10.7"
+typing-extensions = "*"
+
+[package.extras]
+dev = ["mypy", "packaging", "pre-commit", "pytest", "pytest-cov", "rich-codex", "ruff", "types-setuptools"]
+docs = ["markdown-include", "mkdocs", "mkdocs-glightbox", "mkdocs-material-extensions", "mkdocs-material[imaging] (>=9.5.18,<9.6.0)", "mkdocs-rss-plugin", "mkdocstrings[python]", "rich-codex"]
+
+[[package]]
 name = "ruff"
 version = "0.6.1"
 description = "An extremely fast Python linter and code formatter, written in Rust."
@@ -389,6 +516,31 @@ files = [
     {file = "ruff-0.6.1-py3-none-win_arm64.whl", hash = "sha256:3bc81074971b0ffad1bd0c52284b22411f02a11a012082a76ac6da153536e014"},
     {file = "ruff-0.6.1.tar.gz", hash = "sha256:af3ffd8c6563acb8848d33cd19a69b9bfe943667f0419ca083f8ebe4224a3436"},
 ]
+
+[[package]]
+name = "sp-repo-review"
+version = "2024.4.23"
+description = "Review repos for compliance to the Scientific-Python development guidelines"
+optional = false
+python-versions = ">=3.10"
+files = [
+    {file = "sp_repo_review-2024.4.23-py3-none-any.whl", hash = "sha256:c13ed7e9136c50dd97256cf5fa3aae7aac44154789f2795d1b1486c5659a876b"},
+    {file = "sp_repo_review-2024.4.23.tar.gz", hash = "sha256:88cf57dcf7994024a9705e887c6744e923de5f0695711e29739fe7ae882fa2b8"},
+]
+
+[package.dependencies]
+pyyaml = "*"
+repo-review = [
+    {version = "*"},
+    {version = "*", extras = ["cli"], optional = true, markers = "extra == \"cli\""},
+]
+tomli = {version = "*", markers = "python_version < \"3.11\""}
+
+[package.extras]
+cli = ["repo-review[cli]"]
+dev = ["pytest (>=7)"]
+pyproject = ["validate-pyproject-schema-store[all]"]
+test = ["pytest (>=7)", "repo-review (>=0.10.6)"]
 
 [[package]]
 name = "tomli"
@@ -429,6 +581,17 @@ docs = ["furo (>=2024.7.18)", "sphinx (>=7.4.7)", "sphinx-argparse-cli (>=1.16)"
 testing = ["build[virtualenv] (>=1.2.1)", "covdefaults (>=2.3)", "detect-test-pollution (>=1.2)", "devpi-process (>=1)", "diff-cover (>=9.1.1)", "distlib (>=0.3.8)", "flaky (>=3.8.1)", "hatch-vcs (>=0.4)", "hatchling (>=1.25)", "psutil (>=6)", "pytest (>=8.3.2)", "pytest-cov (>=5)", "pytest-mock (>=3.14)", "pytest-xdist (>=3.6.1)", "re-assert (>=1.1)", "setuptools (>=70.3)", "time-machine (>=2.14.2)", "wheel (>=0.43)"]
 
 [[package]]
+name = "typing-extensions"
+version = "4.12.2"
+description = "Backported and Experimental Type Hints for Python 3.8+"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "typing_extensions-4.12.2-py3-none-any.whl", hash = "sha256:04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d"},
+    {file = "typing_extensions-4.12.2.tar.gz", hash = "sha256:1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"},
+]
+
+[[package]]
 name = "virtualenv"
 version = "20.26.3"
 description = "Virtual Python Environment builder"
@@ -451,4 +614,4 @@ test = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "coverage-enable-subprocess
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "636e507537f739b8358693eec41817e0d4bae89f81487b66dd5c19b7f440040d"
+content-hash = "cf84b91f7bf1c250d599d5f1716f771c38505010cfd80047434e70658967a5cc"
