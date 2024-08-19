@@ -42,6 +42,7 @@ pre-commit = [
 ]
 pytest = "^8.3.2"
 ruff = "^0.6.1"
+sp-repo-review = {version = "^2024.4.23", extras = ["cli"], python="^3.10"}
 tox = "^4.18.0"
 
 
@@ -76,6 +77,18 @@ log_cli_level = "INFO"
 minversion = "8.0"
 testpaths = ["exports", "tests"]
 xfail_strict = true
+
+
+[tool.repo-review]
+ignore = [
+    "PY004",    # no `docs/`
+    "PC110",    # no auto-format
+    "PC140",    # no mypy
+    "PC170",    # no sphinx
+    "PC180",    # no css or js
+    "MY",       # no mypy
+    "RTD",      # no readthedocs
+]
 
 
 [tool.ruff]
@@ -118,6 +131,7 @@ legacy_tox_ini = """
 isolated_build = true
 requires = tox>=4
 envlist =
+    repo-review
     pre-commit
     py{38,39,310,311,312,313}
 
@@ -134,4 +148,11 @@ skip_install = true
 allowlist_externals = poetry
 commands_pre = poetry install --sync
 commands = poetry run pre-commit run --all-files
+
+[testenv:repo-review]
+description = repo-review
+skip_install = true
+allowlist_externals = poetry
+commands_pre = poetry install --sync
+commands = poetry run repo-review .
 """
