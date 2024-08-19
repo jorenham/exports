@@ -10,6 +10,17 @@ description = "@export decorator that adds a function or class to __all__"
 authors = ["Joren Hammudoglu <jhammudoglu@gmail.com>"]
 license = "MIT"
 readme = "README.md"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
 repository = "https://github.com/jorenham/exports"
 
 [tool.poetry.dependencies]
@@ -20,13 +31,17 @@ pytest = "^8.3.2"
 pyright = "^1.1.376"
 codespell = "^2.3.0"
 
+
 [tool.pyright]
 include = ["exports"]
-exclude = [".git", "dist",  "build", "**/__pycache__", "**/.pytest_cache"]
+exclude = [".venv", "tests"]
+stubPath = "."
+venvPath = "."
 venv = ".venv"
 pythonVersion = "3.8"
 pythonPlatform = "All"
 typeCheckingMode = "strict"
+
 
 [tool.codespell]
 skip = '*.lock,.venv,.vscode,dist'

@@ -17,16 +17,19 @@ jobs:
     timeout-minutes: 5
 
     strategy:
-      fail-fast: false
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.8", "3.12", "3.13-dev"]
 
     steps:
       - name: checkout
         uses: actions/checkout@v4
 
       - name: install poetry
-        run: pipx install poetry
+        run: |
+          pipx install poetry
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
 
       - name: setup python
         uses: actions/setup-python@v5
@@ -47,4 +50,4 @@ jobs:
         run: poetry run pyright
 
       - name: pytest
-        run: poetry run py.test
+        run: poetry run pytest
