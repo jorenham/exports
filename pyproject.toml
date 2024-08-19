@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "python-exports"
-version = "1.1.1"
+version = "1.2.0"
 description = "@export decorator that adds a function or class to __all__"
 authors = ["Joren Hammudoglu <jhammudoglu@gmail.com>"]
 license = "MIT"
