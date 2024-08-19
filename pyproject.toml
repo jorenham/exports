@@ -39,6 +39,12 @@ pytest = "^8.3.2"
 ruff = "^0.6.1"
 
 
+[tool.poetry.group.test-github]
+optional = true
+[tool.poetry.group.test-github.dependencies]
+pytest-github-actions-annotate-failures = ">=0.2.0,<1.0"
+
+
 [tool.codespell]
 skip = '*.lock,.venv,.vscode,dist'
 context = 2
