@@ -1,4 +1,4 @@
 {
   "editor.rulers": [88],
-  "git.branchProtection": ["master"],
+  "git.branchProtection": ["master"]
 }

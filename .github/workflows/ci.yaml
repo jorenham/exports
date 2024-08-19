@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v16
+        with:
+          config: ".markdownlint.yaml"
+          globs: "**/*.md"
+
+      - name: install poetry
+        run: |
+          pipx install poetry
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          cache: poetry
+
+      - name: poetry install
+        run: poetry install
+
+      - name: codespell
+        run: poetry run codespell .
+
+      - name: ruff check
+        run: poetry run ruff check --output-format=github
+
+      - name: basedpyright
+        run: poetry run basedpyright
+
+      - name: basedpyright --verifytypes
+        run: poetry run basedpyright --ignoreexternal --verifytypes exports
+
+      # - name: mypy
+      #   run: poetry run mypy .
+
+      # - uses: scientific-python/repo-review@v0.11.0
+      #   with:
+      #     plugins: sp-repo-review
+
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.8", "3.12", "3.13-dev"]
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: install poetry
+        run: pipx install poetry
+
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: poetry
+
+      - name: poetry install
+        run: poetry install --sync --with test-github
+
+      - name: pytest
+        run: poetry run pytest
