@@ -1,18 +1,19 @@
+from __future__ import annotations
+
 import contextlib
 import inspect
 import threading
 import warnings
+from collections.abc import Sequence
 from typing import (
     Any,
     Callable,
     Final,
-    Sequence,
-    cast,
-    overload,
     TypeVar,
     Union,
+    cast,
+    overload,
 )
-
 
 _T = TypeVar('_T', bound=Union[Callable[..., Any], type, object])
 _V  = TypeVar('_V')
@@ -25,11 +26,9 @@ def _identity(_obj: _V) -> _V:
 
 
 @overload
-def export(obj: str, *, threadsafe: bool = ...) -> Callable[[_T], _T]: ...
+def export(__obj: str, *, threadsafe: bool = ...) -> Callable[[_T], _T]: ...
 @overload
-def export(obj: _T, *, threadsafe: bool = ...) -> _T: ...
-
-
+def export(__obj: _T, *, threadsafe: bool = ...) -> _T: ...
 def export(
     obj: Union[_T, str],
     *,
@@ -93,9 +92,11 @@ def export(
 
     with _lock if threadsafe else contextlib.nullcontext():
         if hasattr(module, '__all__'):
-            if not isinstance(module.__all__, list):
-                setattr(module, '__all__', list(module.__all__))
-            exports = list(cast(Sequence[str], module.__all__[:]))
+            all_list: Sequence[str] = module.__all__
+            if not isinstance(all_list, list):
+                all_list = list(all_list)
+                setattr(module,'__all__', all_list)
+            exports = list(all_list[:])
         else:
             setattr(module, '__all__', [])
             exports = []
