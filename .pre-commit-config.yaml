@@ -74,3 +74,9 @@ repos:
         language: system
         always_run: true
         pass_filenames: false
+
+      - id: basedmypy
+        name: basedmypy
+        entry: poetry run mypy
+        language: system
+        types_or: [python, pyi]
