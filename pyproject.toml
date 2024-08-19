@@ -27,9 +27,14 @@ repository = "https://github.com/jorenham/exports"
 python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.3.2"
-pyright = "^1.1.376"
 codespell = "^2.3.0"
+pyright = "^1.1.376"
+pytest = "^8.3.2"
+
+
+[tool.codespell]
+skip = '*.lock,.venv,.vscode,dist'
+context = 2
 
 
 [tool.pyright]
@@ -43,6 +48,10 @@ pythonPlatform = "All"
 typeCheckingMode = "strict"
 
 
-[tool.codespell]
-skip = '*.lock,.venv,.vscode,dist'
-context = 2
+[tool.pytest.ini_options]
+addopts = ["-ra", "--strict-config", "--strict-markers"]
+filterwarnings = ["error"]
+log_cli_level = "INFO"
+minversion = "8.0"
+testpaths = ["exports", "tests"]
+xfail_strict = true
