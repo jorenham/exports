@@ -1,5 +1,5 @@
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 
@@ -22,14 +22,25 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 repository = "https://github.com/jorenham/exports"
+documentation = "https://github.com/jorenham/exports/blob/master/README.md"
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/jorenham/exports/issues"
+"Changelog" = "https://github.com/jorenham/exports/releases"
 
 [tool.poetry.dependencies]
 python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.3.2"
-pyright = "^1.1.376"
 codespell = "^2.3.0"
+pyright = "^1.1.376"
+pytest = "^8.3.2"
+ruff = "^0.6.1"
+
+
+[tool.codespell]
+skip = '*.lock,.venv,.vscode,dist'
+context = 2
 
 
 [tool.pyright]
@@ -43,6 +54,44 @@ pythonPlatform = "All"
 typeCheckingMode = "strict"
 
 
-[tool.codespell]
-skip = '*.lock,.venv,.vscode,dist'
-context = 2
+[tool.pytest.ini_options]
+addopts = ["-ra", "--strict-config", "--strict-markers"]
+filterwarnings = ["error"]
+log_cli_level = "INFO"
+minversion = "8.0"
+testpaths = ["exports", "tests"]
+xfail_strict = true
+
+
+[tool.ruff]
+src = ["exports"]
+target-version = "py38"
+indent-width = 4
+show-fixes = true
+force-exclude = true
+extend-exclude = [".github", ".vscode", "tests"]
+
+[tool.ruff.lint]
+preview = true
+select = ["ALL"]
+ignore = ["CPY", "DOC", "EM102", "TRY003", "D104"]
+
+[tool.ruff.lint.isort]
+case-sensitive = true
+combine-as-imports = true
+known-first-party = ["exports"]
+lines-after-imports = 2
+lines-between-types = 0
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
+
+[tool.ruff.format]
+preview = true
+quote-style = "single"
+# keep in sync with .editorconfig
+indent-style = "space"
+line-ending = "lf"

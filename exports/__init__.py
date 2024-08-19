@@ -4,36 +4,24 @@ import contextlib
 import inspect
 import threading
 import warnings
-from collections.abc import Sequence
-from typing import (
-    Any,
-    Callable,
-    Final,
-    TypeVar,
-    Union,
-    cast,
-    overload,
-)
+from typing import Callable, Final, TypeVar, cast, overload
 
-_T = TypeVar('_T', bound=Union[Callable[..., Any], type, object])
-_V  = TypeVar('_V')
+
+_T = TypeVar('_T', bound='Callable[..., object] | type | object')
+_V = TypeVar('_V')
 
 _lock: Final[threading.Lock] = threading.Lock()
 
 
-def _identity(_obj: _V) -> _V:
+def _identity(_obj: _V, /) -> _V:
     return _obj
 
 
 @overload
-def export(__obj: str, *, threadsafe: bool = ...) -> Callable[[_T], _T]: ...
+def export(obj: str, /, *, threadsafe: bool = ...) -> Callable[[_T], _T]: ...
 @overload
-def export(__obj: _T, *, threadsafe: bool = ...) -> _T: ...
-def export(
-    obj: Union[_T, str],
-    *,
-    threadsafe: bool = False
-) -> Union[Callable[[_T], _T], _T]:
+def export(obj: _T, /, *, threadsafe: bool = ...) -> _T: ...
+def export(obj: _T | str, /, *, threadsafe: bool = False) -> Callable[[_T], _T] | _T:
     """Add a function, class or name to __all__.
 
     If the module has no __all__, it is created. Otherwise, the export is
@@ -57,26 +45,28 @@ def export(
     >>> export('fold')
 
     Caveats:
+        Exporting a function or class directly relies on the __name__ attribute,
+        so consider the following example:
 
-    Exporting a function or class directly relies on the __name__ attribute,
-    so consider the following example:
+        >>> def eggs():
+        ...     ...
+        >>> fake_eggs = eggs
 
-    >>> def eggs():
-    ...     ...
-    >>> fake_eggs = eggs
+        If we want to export fake_eggs, then this **will not work**:
 
-    If we want to export fake_eggs, then this **will not work**:
+        >>> export(fake_eggs)  # BAD: this will add 'eggs' to __all__
 
-    >>> export(fake_eggs)  # BAD: this will add 'eggs' to __all__
+        In such cases, use the name instead:
 
-    In such cases, use the name instead:
+        >>> export('fake_eggs')  # GOOD
 
-    >>> export('fake_eggs')  # GOOD
+        You'll be safe if you either
 
-    You'll be safe if you either
+        - decorate a function or a class directly with `@export`,
+        - pass the name string when using plain `export('...')` calls.
 
-    - decorate a function or a class directly with `@export`,
-    - pass the name string when using plain `export('...')` calls.
+    Raises:
+        ModuleNotFoundError: if the module could not be found
 
     """
     module = inspect.getmodule(inspect.stack()[1][0])
@@ -91,22 +81,12 @@ def export(
         name = cast(str, getattr(obj, '__name__', None) or str(obj))
 
     with _lock if threadsafe else contextlib.nullcontext():
-        if hasattr(module, '__all__'):
-            all_list: Sequence[str] = module.__all__
-            if not isinstance(all_list, list):
-                all_list = list(all_list)
-                setattr(module,'__all__', all_list)
-            exports = list(all_list[:])
-        else:
-            setattr(module, '__all__', [])
-            exports = []
-
+        exports: list[str] = list(getattr(module, '__all__', []))
         if name in exports:
-            warnings.warn(f'{name!r} already exported')
-
+            warnings.warn(f'{name!r} already exported', stacklevel=2)
         else:
             exports.append(name)
-            getattr(module, '__all__')[:] = exports
+        module.__all__ = exports  # pyright: ignore[reportAttributeAccessIssue]
 
     return res
 
