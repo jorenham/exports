@@ -53,7 +53,7 @@ jobs:
         run: poetry run basedpyright
 
       - name: basedpyright --verifytypes
-        run: poetry run basedpyright --ignoreexternal --verifytypes optype
+        run: poetry run basedpyright --ignoreexternal --verifytypes exports
 
       - name: pytest
         run: poetry run pytest
