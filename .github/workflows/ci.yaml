@@ -25,7 +25,7 @@ jobs:
           config: ".markdownlint.yaml"
           globs: "**/*.md"
 
-      - uses: scientific-python/repo-review@v0.11.0
+      - uses: scientific-python/repo-review@v0.11.2
         with:
           plugins: sp-repo-review
 
