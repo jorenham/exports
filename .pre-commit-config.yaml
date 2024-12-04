@@ -78,4 +78,4 @@ repos:
         name: basedmypy
         entry: poetry run mypy
         language: system
-        types_or: [python, pyi]
+        types: [directory]

@@ -1,2 +1,2 @@
-def external():
+def external() -> bool:
     return True
