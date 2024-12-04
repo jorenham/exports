@@ -25,21 +25,21 @@ documentation = "https://github.com/jorenham/exports/blob/master/README.md"
 packages = [{include = "exports"}]  # don't remove
 
 [tool.poetry.urls]
-"Bug Tracker" = "https://github.com/jorenham/exports/issues"
+"Issues" = "https://github.com/jorenham/exports/issues"
 "Changelog" = "https://github.com/jorenham/exports/releases"
 
 [tool.poetry.dependencies]
 python = "^3.9"
 
 [tool.poetry.group.dev.dependencies]
-basedmypy = "^2.6.0"
-basedpyright = "^1.16.0"
+basedmypy = {version = "^2.8.0", extras = ["faster-cache"]}
+basedpyright = "^1.22.0"
 codespell = "^2.3.0"
-pre-commit = "^3.8.0"
-pytest = "^8.3.2"
-ruff = ">=0.6.1,<0.8.0"
-sp-repo-review = {version = "^2024.4.23", extras = ["cli"], python="^3.10"}
-tox = "^4.18.0"
+pre-commit = "^4.0.1"
+pytest = "^8.3.4"
+ruff = "^0.8.1"
+sp-repo-review = {version = "^2024.8.19", extras = ["cli"], python="^3.10"}
+tox = "^4.23.2"
 
 
 [tool.poetry.group.test-github]
@@ -55,9 +55,7 @@ context = 2
 
 [tool.mypy]
 python_version = "3.9"
-always_true = "NP2"
-always_false = "NP20"
-modules = ["optype", "tests"]
+modules = ["exports", "tests"]
 exclude = ["^.venv/.*", "tests/*"]
 strict = true
 
@@ -66,8 +64,8 @@ disallow_incomplete_defs = true
 show_error_code_links = true
 warn_redundant_casts = true
 warn_unused_ignores = true
-# based
-disallow_any_expr = false  # https://github.com/numpy/numpy/pull/27211
+# todo
+disallow_any_expr = false
 disallow_any_explicit = false
 disallow_any_decorated = false
 
@@ -80,7 +78,6 @@ venv = ".venv"
 pythonVersion = "3.9"
 pythonPlatform = "All"
 typeCheckingMode = "all"
-
 reportUnusedCallResult = false  # https://github.com/microsoft/pyright/issues/8650
 
 
