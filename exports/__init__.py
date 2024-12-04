@@ -4,7 +4,7 @@ import contextlib
 import inspect
 import threading
 import warnings
-from typing import Callable, Final, TypeVar, cast, overload
+from typing import Callable, Final, TypeVar, overload
 
 
 _T = TypeVar('_T', bound='Callable[..., object] | type | object')
@@ -74,12 +74,13 @@ def export(obj: _T | str, /, *, threadsafe: bool = False) -> Callable[[_T], _T] 
         raise ModuleNotFoundError(f'could not find module of {obj!r}')
 
     res: Callable[[_T], _T] | _T
+    name: str
     if isinstance(obj, str):
         name = obj
         res = _identity
     else:
         res = obj
-        name = cast(str, getattr(obj, '__name__', None) or str(obj))
+        name = getattr(obj, '__name__', None) or str(obj)
 
     with _lock if threadsafe else contextlib.nullcontext():
         exports: list[str] = list(getattr(module, '__all__', []))
