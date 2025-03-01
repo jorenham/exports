@@ -37,8 +37,8 @@ basedpyright = "^1.22.0"
 codespell = "^2.3.0"
 pre-commit = "^4.0.1"
 pytest = "^8.3.4"
-ruff = "^0.8.1"
-sp-repo-review = {version = "^2024.8.19", extras = ["cli"], python="^3.10"}
+ruff = ">=0.8.1,<0.10.0"
+sp-repo-review = {version = ">=2024.8.19,<2026.0.0", extras = ["cli"], python="^3.10"}
 tox = "^4.23.2"
 
 
