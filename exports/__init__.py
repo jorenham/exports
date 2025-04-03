@@ -1,16 +1,16 @@
 from __future__ import annotations
 
+import _thread  # noqa: PLC2701
 import contextlib
 import inspect
-import threading
 import warnings
-from typing import Callable, Final, TypeVar, overload
+from typing import Callable, Final, TypeVar, cast, overload
 
 
 _T = TypeVar('_T', bound='Callable[..., object] | type | object')
 _V = TypeVar('_V')
 
-_lock: Final[threading.Lock] = threading.Lock()
+_lock: Final = _thread.RLock()
 
 
 def _identity(_obj: _V, /) -> _V:
@@ -80,10 +80,10 @@ def export(obj: _T | str, /, *, threadsafe: bool = False) -> Callable[[_T], _T] 
         res = _identity
     else:
         res = obj
-        name = getattr(obj, '__name__', None) or str(obj)
+        name = cast('str', getattr(obj, '__name__', None)) or str(obj)
 
     with _lock if threadsafe else contextlib.nullcontext():
-        exports: list[str] = list(getattr(module, '__all__', []))
+        exports = list(cast('list[str]', getattr(module, '__all__', [])))
         if name in exports:
             warnings.warn(f'{name!r} already exported', stacklevel=2)
         else:
