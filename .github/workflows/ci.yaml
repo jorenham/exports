@@ -2,8 +2,7 @@ name: CI
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
   pull_request:
   workflow_dispatch:
 
@@ -11,9 +10,16 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  UV_FROZEN: 1
+
 jobs:
   lint:
-    timeout-minutes: 5
+    timeout-minutes: 1
     runs-on: ubuntu-latest
 
     steps:
@@ -25,63 +31,46 @@ jobs:
           config: ".markdownlint.yaml"
           globs: "**/*.md"
 
-      - uses: scientific-python/repo-review@v0.11.3
+      - uses: scientific-python/repo-review@v0.12.1
         with:
           plugins: sp-repo-review
 
-      - name: install poetry
-        run: |
-          pipx install poetry
-          poetry config virtualenvs.create true --local
-          poetry config virtualenvs.in-project true --local
-
-      - uses: actions/setup-python@v5
+      - uses: astral-sh/setup-uv@v5
         with:
-          python-version: "3.9"
-          cache: poetry
-
-      - name: poetry install
-        run: poetry install
+          enable-cache: true
 
       - name: codespell
-        run: poetry run codespell .
+        run: uv run codespell .
 
-      - name: ruff check
-        run: poetry run ruff check --output-format=github
+      - name: ruff
+        run: |
+          uv run --no-sync ruff check --output-format=github
+          uv run --no-sync ruff format --check
 
       - name: basedpyright
-        run: poetry run basedpyright
+        run: uv run basedpyright
 
       - name: basedpyright --verifytypes
-        run: poetry run basedpyright --ignoreexternal --verifytypes exports
+        run: uv run basedpyright --ignoreexternal --verifytypes exports
 
       - name: basedmypy
-        run: poetry run mypy .
+        run: uv run mypy .
 
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 1
 
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ["3.9", "3.13"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
     steps:
-      - name: checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: install poetry
-        run: pipx install poetry
-
-      - name: setup python
-        uses: actions/setup-python@v5
+      - uses: astral-sh/setup-uv@v5
         with:
-          python-version: ${{ matrix.python-version }}
-          cache: poetry
-
-      - name: poetry install
-        run: poetry install --sync --with test-github
+          enable-cache: true
 
       - name: pytest
-        run: poetry run pytest
+        run: uv run pytest

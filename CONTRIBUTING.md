@@ -49,17 +49,12 @@ Ready to contribute? Here's how to set up `exports` for local development.
     git clone git@github.com:jorenham/exports.git
     ```
 
-3. Install your local copy using [poetry](https://python-poetry.org/).
-   Assuming you have [poetry installed](https://python-poetry.org/docs/#installation),
+3. Install your local copy using [uv](https://docs.astral.sh/uv/).
+   Assuming you have [uv installed](https://docs.astral.sh/uv/getting-started/installation/),
    this is how you set up your fork for local development:
-    ```bash
-    poetry install
-    ```
-
-4. Install pre-commit:
 
     ```bash
-    poetry run pre-commit install
+    uv sync
     ```
 
 ## Pull Request Guidelines
