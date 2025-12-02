@@ -2,23 +2,21 @@ version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
-    target-branch: master
     schedule:
-      interval: monthly
+      interval: daily
     allow:
       - dependency-type: all
     groups:
       actions:
-        patterns:
-          - "*"
+        patterns: ["*"]
+
   - package-ecosystem: uv
+    versioning-strategy: increase
     directory: /
-    target-branch: master
     schedule:
-      interval: monthly
+      interval: daily
     allow:
       - dependency-type: all
     groups:
       actions:
-        patterns:
-          - "*"
+        patterns: ["*"]
