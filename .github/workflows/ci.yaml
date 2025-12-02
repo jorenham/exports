@@ -22,15 +22,12 @@ jobs:
     steps:
       - uses: actions/checkout@v6.0.0
 
-      - name: markdownlint
-        uses: DavidAnson/markdownlint-cli2-action@v21.0.0
-        with:
-          config: ".markdownlint.yaml"
-          globs: "**/*.md"
-
       - uses: scientific-python/repo-review@v0.12.3
         with:
           plugins: sp-repo-review
+
+      - name: dprint
+        uses: dprint/check@v2.3
 
       - uses: astral-sh/setup-uv@v7.1.4
 
@@ -48,7 +45,7 @@ jobs:
       - name: basedpyright --verifytypes
         run: uv run basedpyright --ignoreexternal --verifytypes exports
 
-      - name: basedmypy
+      - name: mypy
         run: uv run mypy .
 
   test:

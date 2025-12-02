@@ -51,7 +51,7 @@
     </a>
 </p>
 
------
+---
 
 ## Installation
 
@@ -72,26 +72,26 @@ Now you can use it to add to `__all__` as
 
 - function decorator
 
-    ```pycon
-    >>> @export
-    ... def spam():
-    ...     ...
-    ```
+  ```pycon
+  >>> @export
+  ... def spam():
+  ...     ...
+  ```
 
 - class decorator:
 
-    ```pycon
-    >>> @export
-    ... class Ham:
-    ...     ...
-    ```
+  ```pycon
+  >>> @export
+  ... class Ham:
+  ...     ...
+  ```
 
 - by name:
 
-    ```pycon
-    >>> from functools import reduce as fold
-    >>> export('fold')
-    ```
+  ```pycon
+  >>> from functools import reduce as fold
+  >>> export('fold')
+  ```
 
 ## Behaviour
 
