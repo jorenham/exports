@@ -3,7 +3,7 @@ import pytest
 from .spam import *
 
 
-def test_single():
+def test_single() -> None:
     assert public_all()
     assert public_export()
 

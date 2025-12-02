@@ -1,28 +1,32 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.9,<0.10"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "exports"
+module-root = ""
 
 
 [project]
 name = "python-exports"
-version = "1.3.0dev0"
+version = "1.3.0.dev0"
 description = "@export decorator that adds a function or class to __all__"
 authors = [{name = "Joren Hammudoglu", email = "jhammudoglu@gmail.com"}]
 license = "MIT"
+license-file = "LICENSE"
 readme = "README.md"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Typing :: Typed",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = []
-packages = [{include = "exports"}] # don't remove
 
 [project.urls]
 Repository = "https://github.com/jorenham/exports"
@@ -34,25 +38,14 @@ Funding = "https://github.com/sponsors/jorenham"
 
 [dependency-groups]
 dev = [
-    "basedmypy[faster-cache]>=2.10.0",
-    "basedpyright>=1.28.4",
+    "mypy==1.19.0",
+    "basedpyright==1.34.0",
     "codespell>=2.4.1",
-    "pytest>=8.3.5",
-    "ruff>=0.11.2",
+    "pytest>=9.0.1",
+    "ruff>=0.14.7",
+    "sp-repo-review[cli]>=2025.11.21",
 ]
 
-
-[tool.hatch.build]
-include = "exports"
-exclude = [
-    "**/.*",
-    "**/*.yaml",
-    "/dist",
-    "/tests",
-    "CONTRIBUTING.md",
-    "uv.lock",
-]
-skip-excluded-dirs = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["exports"]
@@ -88,23 +81,16 @@ reportUnusedCallResult = false # https://github.com/microsoft/pyright/issues/865
 
 
 [tool.pytest.ini_options]
-minversion = "8.0"
+minversion = "9.0"
+addopts = ["-ra"]
 testpaths = ["exports", "tests"]
-addopts = ["-ra", "--strict-config", "--strict-markers"]
 filterwarnings = ["error"]
-log_cli_level = "INFO"
-xfail_strict = true
+log_level = "INFO"
+strict = true
 
 
 [tool.repo-review]
-ignore = [
-    "PY004",
-    "PY006",
-    "PC110",
-    "PC170",
-    "PC180",
-    "RTD",
-]
+ignore = ["PY004", "PY006", "RTD"]
 
 
 [tool.ruff]
@@ -143,12 +129,12 @@ line-ending = "lf"
 min_version = "4"
 requires = ["tox-uv>=1"]
 env_list = [
-    "3.9",
     "3.10",
     "3.11",
     "3.12",
     "3.13",
-    "basedmypy",
+    "3.14",
+    "mypy",
     "basedpyright",
     "repo-review",
     "ruff",
@@ -160,8 +146,8 @@ runner = "uv-venv-lock-runner"
 dependency_groups = ["dev"]
 commands = [["pytest"]]
 
-[tool.tox.env.basedmypy]
-description = "basedmypy"
+[tool.tox.env.mypy]
+description = "mypy"
 runner = "uv-venv-lock-runner"
 dependency_groups = ["dev"]
 commands = [
@@ -169,9 +155,6 @@ commands = [
         "mypy",
         "--no-incremental",
         "--cache-dir=/dev/null",
-        "--soft-error-limit=-1",
-        "--no-pretty",
-        "--hide-error-context",
         {replace = "posargs", default = ["."], extend = true},
     ],
 ]

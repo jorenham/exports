@@ -4,7 +4,11 @@ import _thread  # noqa: PLC2701
 import contextlib
 import inspect
 import warnings
-from typing import Callable, Final, TypeVar, cast, overload
+from typing import TYPE_CHECKING, Final, TypeVar, cast, overload
+
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 _T = TypeVar('_T', bound='Callable[..., object] | type | object')

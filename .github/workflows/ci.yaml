@@ -1,4 +1,5 @@
 name: CI
+permissions: read-all
 
 on:
   push:
@@ -7,12 +8,8 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
-
-permissions:
-  contents: read
-  pull-requests: write
 
 env:
   UV_FROZEN: 1
@@ -23,10 +20,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6.0.0
 
       - name: markdownlint
-        uses: DavidAnson/markdownlint-cli2-action@v20
+        uses: DavidAnson/markdownlint-cli2-action@v21.0.0
         with:
           config: ".markdownlint.yaml"
           globs: "**/*.md"
@@ -35,17 +32,15 @@ jobs:
         with:
           plugins: sp-repo-review
 
-      - uses: astral-sh/setup-uv@v7
-        with:
-          enable-cache: true
+      - uses: astral-sh/setup-uv@v7.1.4
 
       - name: codespell
         run: uv run codespell .
 
       - name: ruff
         run: |
-          uv run --no-sync ruff check --output-format=github
-          uv run --no-sync ruff format --check
+          uv run ruff check --output-format=github
+          uv run ruff format --check
 
       - name: basedpyright
         run: uv run basedpyright
@@ -63,12 +58,12 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6.0.0
 
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v7.1.4
         with:
           enable-cache: true
 
