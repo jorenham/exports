@@ -36,7 +36,7 @@ Funding = "https://github.com/sponsors/jorenham"
 
 [dependency-groups]
 dev = [
-  "mypy==1.19.0",
+  "mypy==1.19.1",
   "basedpyright==1.36.1",
   "codespell>=2.4.1",
   "pytest>=9.0.1",
