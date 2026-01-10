@@ -9,7 +9,7 @@ def test_single() -> None:
     assert public_export(), ham.__all__
 
     with pytest.raises(NameError):
-        assert private()  # type: ignore[name-defined]  # pyright: ignore[reportUndefinedVariable]
+        assert private()  # type: ignore[name-defined]  # pyright: ignore[reportUndefinedVariable]  # ty: ignore[unresolved-reference]
 
     assert external(), ham.__all__
     assert external_alt(), ham.__all__
