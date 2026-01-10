@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: daily
+      interval: monthly
     allow:
       - dependency-type: all
     groups:
@@ -14,7 +14,7 @@ updates:
     versioning-strategy: increase
     directory: /
     schedule:
-      interval: daily
+      interval: monthly
     allow:
       - dependency-type: all
     groups:
