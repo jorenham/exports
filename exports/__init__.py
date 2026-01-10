@@ -11,7 +11,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
 
-_T = TypeVar("_T", bound="Callable[..., object] | type | object")
+_T = TypeVar("_T", bound=object)
 _V = TypeVar("_V")
 
 _lock: Final = _thread.RLock()
@@ -25,7 +25,7 @@ def _identity(_obj: _V, /) -> _V:
 def export(obj: str, /, *, threadsafe: bool = ...) -> Callable[[_T], _T]: ...
 @overload
 def export(obj: _T, /, *, threadsafe: bool = ...) -> _T: ...
-def export(obj: _T | str, /, *, threadsafe: bool = False) -> Callable[[_T], _T] | _T:
+def export(obj: str | _T, /, *, threadsafe: bool = False) -> Callable[[_T], _T] | _T:
     """Add a function, class or name to __all__.
 
     If the module has no __all__, it is created. Otherwise, the export is
