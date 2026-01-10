@@ -44,9 +44,13 @@ dev = [
   "sp-repo-review[cli]>=2025.11.21",
 ]
 
+# codespell
+
 [tool.codespell]
 skip = '*.lock,.venv,.vscode,dist'
 context = 2
+
+# mypy
 
 [tool.mypy]
 strict = true
@@ -62,6 +66,8 @@ local_partial_types = true
 warn_unreachable = false
 warn_unused_ignores = true
 
+# (based)pyright
+
 [tool.pyright]
 include = ["exports", "tests"]
 exclude = [".venv"]
@@ -69,6 +75,8 @@ stubPath = "."
 pythonPlatform = "All"
 typeCheckingMode = "all"
 reportUnusedCallResult = false # https://github.com/microsoft/pyright/issues/8650
+
+# pytest
 
 [tool.pytest.ini_options]
 minversion = "9.0"
@@ -78,17 +86,21 @@ filterwarnings = ["error"]
 log_level = "INFO"
 strict = true
 
+# repo-review
+
 [tool.repo-review]
 ignore = ["PY004", "PY006", "RTD"]
+
+# ruff
 
 [tool.ruff]
 src = ["exports"]
 show-fixes = true
 force-exclude = true
 extend-exclude = [".github", ".vscode", "tests"]
+preview = true
 
 [tool.ruff.lint]
-preview = true
 select = ["ALL"]
 ignore = ["CPY", "DOC", "EM102", "TRY003", "D104", "RUF067"]
 
@@ -98,19 +110,16 @@ combine-as-imports = true
 known-first-party = ["exports"]
 lines-after-imports = 2
 lines-between-types = 0
+split-on-trailing-comma = false
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
-[tool.ruff.lint.flake8-quotes]
-inline-quotes = "single"
-
 [tool.ruff.format]
-preview = true
-quote-style = "single"
-# keep in sync with .editorconfig
-indent-style = "space"
 line-ending = "lf"
+skip-magic-trailing-comma = true
+
+# tox
 
 [tool.tox]
 min_version = "4"
