@@ -11,7 +11,7 @@ name = "python-exports"
 version = "1.3.0.dev0"
 description = "@export decorator that adds a function or class to __all__"
 authors = [{ name = "Joren Hammudoglu", email = "jhammudoglu@gmail.com" }]
-license = "MIT"
+license = "BSD-3-Clause"
 license-files = ["LICENSE"]
 readme = "README.md"
 classifiers = [
