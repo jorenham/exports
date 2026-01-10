@@ -42,6 +42,9 @@ jobs:
       - name: ty
         run: uv run ty check --error-on-warning --output-format=github
 
+      - name: pyrefly
+        run: uv run pyrefly check
+
       - name: basedpyright
         run: uv run basedpyright
 

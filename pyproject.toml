@@ -38,6 +38,7 @@ Funding = "https://github.com/sponsors/jorenham"
 dev = [
   "mypy==1.19.1",
   "basedpyright==1.37.1",
+  "pyrefly==0.47.0",
   "pytest>=9.0.2",
   "ruff>=0.14.11",
   "sp-repo-review[cli]>=2025.11.21",
@@ -69,6 +70,11 @@ stubPath = "."
 pythonPlatform = "All"
 typeCheckingMode = "all"
 reportUnusedCallResult = false # https://github.com/microsoft/pyright/issues/8650
+
+# pyrefly
+
+[tool.pyrefly]
+project-includes = ["exports", "tests"]
 
 # ty
 
@@ -144,6 +150,7 @@ env_list = [
   "3.14",
   "mypy",
   "basedpyright",
+  "pyrefly",
   "ty",
   "repo-review",
   "ruff",
@@ -174,17 +181,23 @@ runner = "uv-venv-lock-runner"
 dependency_groups = ["dev"]
 commands = [["basedpyright", { replace = "posargs", default = [], extend = true }]]
 
+[tool.tox.env.pyrefly]
+description = "pyrefly"
+runner = "uv-venv-lock-runner"
+dependency_groups = ["dev"]
+commands = [["pyrefly", "check", { replace = "posargs", default = [], extend = true }]]
+
 [tool.tox.env.ty]
 description = "ty"
 runner = "uv-venv-lock-runner"
-dependency_groups = ["type"]
+dependency_groups = ["dev"]
 commands = [
   [
     "ty",
     "check",
     "--error-on-warning",
     "--output-format=concise",
-    { replace = "posargs", default = ["scipy-stubs", "scripts"], extend = true },
+    { replace = "posargs", default = [], extend = true },
   ],
 ]
 
