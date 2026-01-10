@@ -37,10 +37,10 @@ Funding = "https://github.com/sponsors/jorenham"
 [dependency-groups]
 dev = [
   "mypy==1.19.1",
-  "basedpyright==1.37.0",
+  "basedpyright==1.37.1",
   "codespell>=2.4.1",
-  "pytest>=9.0.1",
-  "ruff>=0.14.7",
+  "pytest>=9.0.2",
+  "ruff>=0.14.11",
   "sp-repo-review[cli]>=2025.11.21",
 ]
 
@@ -90,7 +90,7 @@ extend-exclude = [".github", ".vscode", "tests"]
 [tool.ruff.lint]
 preview = true
 select = ["ALL"]
-ignore = ["CPY", "DOC", "EM102", "TRY003", "D104"]
+ignore = ["CPY", "DOC", "EM102", "TRY003", "D104", "RUF067"]
 
 [tool.ruff.lint.isort]
 case-sensitive = true
