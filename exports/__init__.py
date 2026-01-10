@@ -92,10 +92,13 @@ def export(obj: _T | str, /, *, threadsafe: bool = False) -> Callable[[_T], _T] 
             warnings.warn(f"{name!r} already exported", stacklevel=2)
         else:
             exports.append(name)
-        module.__all__ = exports  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]
+        module.__all__ = exports  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]  # ty: ignore[unresolved-attribute]
 
     return res
 
 
-# effectively self-decoration
-export(export)
+__all__ = ("export",)
+
+
+def __dir__() -> tuple[str, ...]:
+    return __all__

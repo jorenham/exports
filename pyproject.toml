@@ -41,6 +41,7 @@ dev = [
   "pytest>=9.0.2",
   "ruff>=0.14.11",
   "sp-repo-review[cli]>=2025.11.21",
+  "ty==0.0.11",
 ]
 
 # mypy
@@ -68,6 +69,24 @@ stubPath = "."
 pythonPlatform = "All"
 typeCheckingMode = "all"
 reportUnusedCallResult = false # https://github.com/microsoft/pyright/issues/8650
+
+# ty
+
+[tool.ty]
+
+[tool.ty.environment]
+python-platform = "all"
+python-version = "3.10" # unlike mypy and pyright, this doesn't depend on the Python env
+
+[tool.ty.src]
+include = ["exports", "tests"]
+
+[tool.ty.analysis]
+respect-type-ignore-comments = false # for mypy compat
+
+[tool.ty.rules]
+unused-ignore-comment = "warn"
+possibly-unresolved-reference = "error"
 
 # pytest
 
@@ -125,6 +144,7 @@ env_list = [
   "3.14",
   "mypy",
   "basedpyright",
+  "ty",
   "repo-review",
   "ruff",
 ]
@@ -153,6 +173,20 @@ description = "basedpyright"
 runner = "uv-venv-lock-runner"
 dependency_groups = ["dev"]
 commands = [["basedpyright", { replace = "posargs", default = [], extend = true }]]
+
+[tool.tox.env.ty]
+description = "ty"
+runner = "uv-venv-lock-runner"
+dependency_groups = ["type"]
+commands = [
+  [
+    "ty",
+    "check",
+    "--error-on-warning",
+    "--output-format=concise",
+    { replace = "posargs", default = ["scipy-stubs", "scripts"], extend = true },
+  ],
+]
 
 [tool.tox.env.ruff]
 description = "ruff"

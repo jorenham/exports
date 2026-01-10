@@ -8,7 +8,7 @@ def test_single() -> None:
     assert public_export()
 
     with pytest.raises(NameError):
-        assert private()  # type: ignore[name-defined]  # pyright: ignore[reportUndefinedVariable]
+        assert private()  # type: ignore[name-defined]  # pyright: ignore[reportUndefinedVariable]  # ty: ignore[unresolved-reference]
 
     assert external()
     assert external_alt()
