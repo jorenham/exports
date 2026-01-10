@@ -11,8 +11,8 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
 
-_T = TypeVar('_T', bound='Callable[..., object] | type | object')
-_V = TypeVar('_V')
+_T = TypeVar("_T", bound="Callable[..., object] | type | object")
+_V = TypeVar("_V")
 
 _lock: Final = _thread.RLock()
 
@@ -75,7 +75,7 @@ def export(obj: _T | str, /, *, threadsafe: bool = False) -> Callable[[_T], _T] 
     """
     module = inspect.getmodule(inspect.stack()[1][0])
     if module is None:
-        raise ModuleNotFoundError(f'could not find module of {obj!r}')
+        raise ModuleNotFoundError(f"could not find module of {obj!r}")
 
     res: Callable[[_T], _T] | _T
     name: str
@@ -84,12 +84,12 @@ def export(obj: _T | str, /, *, threadsafe: bool = False) -> Callable[[_T], _T] 
         res = _identity
     else:
         res = obj
-        name = cast('str', getattr(obj, '__name__', None)) or str(obj)
+        name = cast("str", getattr(obj, "__name__", None)) or str(obj)
 
     with _lock if threadsafe else contextlib.nullcontext():
-        exports = list(cast('list[str]', getattr(module, '__all__', [])))
+        exports = list(cast("list[str]", getattr(module, "__all__", [])))
         if name in exports:
-            warnings.warn(f'{name!r} already exported', stacklevel=2)
+            warnings.warn(f"{name!r} already exported", stacklevel=2)
         else:
             exports.append(name)
         module.__all__ = exports  # type: ignore[attr-defined]  # pyright: ignore[reportAttributeAccessIssue]
