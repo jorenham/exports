@@ -38,17 +38,14 @@ Funding = "https://github.com/sponsors/jorenham"
 dev = [
   "mypy==1.19.1",
   "basedpyright==1.37.1",
-  "codespell>=2.4.1",
   "pytest>=9.0.2",
   "ruff>=0.14.11",
   "sp-repo-review[cli]>=2025.11.21",
 ]
 
-# codespell
+# typos
 
-[tool.codespell]
-skip = '*.lock,.venv,.vscode,dist'
-context = 2
+[tool.typos]
 
 # mypy
 
