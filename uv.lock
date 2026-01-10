@@ -293,7 +293,7 @@ wheels = [
 
 [[package]]
 name = "python-exports"
-version = "1.3.0.dev0"
+version = "1.3.0"
 source = { editable = "." }
 
 [package.dev-dependencies]
