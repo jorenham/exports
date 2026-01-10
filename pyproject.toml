@@ -43,10 +43,6 @@ dev = [
   "sp-repo-review[cli]>=2025.11.21",
 ]
 
-# typos
-
-[tool.typos]
-
 # mypy
 
 [tool.mypy]
