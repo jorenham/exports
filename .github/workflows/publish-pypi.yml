@@ -19,7 +19,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/checkout@v7.0.0
-      - uses: astral-sh/setup-uv@v8.2.0
+      - uses: actions/checkout@v7.0.1
+      - uses: astral-sh/setup-uv@v9.0.0
       - run: uv build
-      - uses: pypa/gh-action-pypi-publish@v1.14.0
+      - uses: pypa/gh-action-pypi-publish@v1.14.2
