@@ -8,7 +8,7 @@ module-root = ""
 
 [project]
 name = "python-exports"
-version = "1.3.1.dev0"
+version = "1.4.0.dev0"
 description = "@export decorator that adds a function or class to __all__"
 authors = [{ name = "Joren Hammudoglu", email = "jhammudoglu@gmail.com" }]
 license = "BSD-3-Clause"
@@ -17,14 +17,14 @@ readme = "README.md"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Operating System :: OS Independent",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
   "Typing :: Typed",
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = []
 
 [project.urls]
@@ -82,7 +82,6 @@ project-includes = ["exports", "tests"]
 
 [tool.ty.environment]
 python-platform = "all"
-python-version = "3.10" # unlike mypy and pyright, this doesn't depend on the Python env
 
 [tool.ty.src]
 include = ["exports", "tests"]
@@ -150,11 +149,11 @@ skip-magic-trailing-comma = true
 min_version = "4"
 requires = ["tox-uv>=1"]
 env_list = [
-  "3.10",
   "3.11",
   "3.12",
   "3.13",
   "3.14",
+  "3.15",
   "mypy",
   "basedpyright",
   "pyrefly",
