@@ -1,5 +1,5 @@
 [build-system]
-requires = ["uv_build>=0.9,<0.10"]
+requires = ["uv_build>=0.13,<0.14"]
 build-backend = "uv_build"
 
 [tool.uv.build-backend]
@@ -36,13 +36,13 @@ Funding = "https://github.com/sponsors/jorenham"
 
 [dependency-groups]
 dev = [
-  "mypy==1.19.1",
-  "basedpyright==1.37.3",
-  "pyrefly==0.50.1",
-  "pytest>=9.0.2",
-  "ruff>=0.14.11",
-  "sp-repo-review[cli]>=2025.11.21",
-  "ty==0.0.14",
+  "mypy==2.4.0",
+  "basedpyright==1.40.2",
+  "pyrefly==1.3.2",
+  "pytest>=9.1.1",
+  "ruff>=0.17.0",
+  "sp-repo-review[cli]>=2026.8.14",
+  "ty==0.0.86",
 ]
 
 # mypy
@@ -107,7 +107,7 @@ strict = true
 # repo-review
 
 [tool.repo-review]
-ignore = ["PY004", "PY006", "RTD"]
+ignore = ["PY004", "PY006", "RTD", "SEC001"]
 
 # ruff
 
@@ -120,7 +120,14 @@ preview = true
 
 [tool.ruff.lint]
 select = ["ALL"]
-ignore = ["CPY", "DOC", "EM102", "TRY003", "D104", "RUF067"]
+ignore = [
+  "CPY",
+  "DOC",
+  "f-string-in-exception",
+  "raise-vanilla-args",
+  "undocumented-public-package",
+  "non-empty-init-module",
+]
 
 [tool.ruff.lint.isort]
 case-sensitive = true

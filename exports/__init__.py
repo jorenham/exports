@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import _thread  # noqa: PLC2701
+import _thread  # ruff: ignore[import-private-name]
 import contextlib
 import inspect
 import warnings
