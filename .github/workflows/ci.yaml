@@ -1,5 +1,5 @@
 name: CI
-permissions: read-all
+permissions: {}
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 env:
@@ -16,11 +16,14 @@ env:
 
 jobs:
   lint:
+    name: lint
     timeout-minutes: 1
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - uses: scientific-python/repo-review@648550baee153feb816412240c03c510822ef871 # v1.2.2
         with:
@@ -55,6 +58,7 @@ jobs:
         run: uv run mypy .
 
   test:
+    name: test (${{ matrix.os }}, ${{ matrix.py }})
     runs-on: ubuntu-latest
     timeout-minutes: 1
 
@@ -65,6 +69,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
 
       - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
         with:
