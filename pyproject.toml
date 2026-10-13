@@ -120,7 +120,14 @@ preview = true
 
 [tool.ruff.lint]
 select = ["ALL"]
-ignore = ["CPY", "DOC", "EM102", "TRY003", "D104", "RUF067"]
+ignore = [
+  "CPY",
+  "DOC",
+  "f-string-in-exception",
+  "raise-vanilla-args",
+  "undocumented-public-package",
+  "non-empty-init-module",
+]
 
 [tool.ruff.lint.isort]
 case-sensitive = true

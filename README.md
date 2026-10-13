@@ -38,23 +38,21 @@ Now you can use it to add to `__all__` as
 
   ```pycon
   >>> @export
-  ... def spam():
-  ...     ...
+  ... def spam(): ...
   ```
 
 - class decorator:
 
   ```pycon
   >>> @export
-  ... class Ham:
-  ...     ...
+  ... class Ham: ...
   ```
 
 - by name:
 
   ```pycon
   >>> from functools import reduce as fold
-  >>> export('fold')
+  >>> export("fold")
   ```
 
 ## Behaviour
@@ -68,8 +66,7 @@ Exporting a function or class directly relies on the `__name__` attribute,
 so consider the following example:
 
 ```pycon
->>> def eggs():
-...     ...
+>>> def eggs(): ...
 >>> fake_eggs = eggs
 ```
 
@@ -82,7 +79,7 @@ If we want to export fake_eggs, then this **will not work**:
 In such cases, use the name instead:
 
 ```pycon
->>> export('fake_eggs')  # GOOD
+>>> export("fake_eggs")  # GOOD
 ```
 
 You'll be safe if you either
