@@ -5,6 +5,12 @@ on:
   push:
     tags: ["v*"]
 
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 env:
   UV_LOCKED: 1
 
@@ -17,9 +23,18 @@ jobs:
       name: pypi
       url: https://pypi.org/p/python-exports
     permissions:
-      id-token: write
+      id-token: write # authenticate with PyPI via OIDC
     steps:
-      - uses: actions/checkout@v7.0.1
-      - uses: astral-sh/setup-uv@v10.3.0
-      - run: uv build
-      - uses: pypa/gh-action-pypi-publish@v1.14.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          enable-cache: false
+
+      - name: uv build
+        run: uv build
+
+      - name: publish to PyPI
+        uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2

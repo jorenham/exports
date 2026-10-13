@@ -106,7 +106,7 @@ strict = true
 # repo-review
 
 [tool.repo-review]
-ignore = ["PY004", "PY006", "RTD", "SEC001"]
+ignore = ["PY004", "PY006", "RTD"]
 
 # ruff
 
